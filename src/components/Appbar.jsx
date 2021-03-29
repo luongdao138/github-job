@@ -15,6 +15,9 @@ const useStyles = makeStyles((theme) => ({
   appbar: {
     padding: theme.spacing(1.5),
     margin: 'auto',
+    [theme.breakpoints.down('xs')]: {
+      padding: theme.spacing(0.5),
+    },
   },
   search: {
     backgroundColor: fade(theme.palette.common.white, 0.15),
@@ -40,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
   },
   icon: {
     color: theme.palette.common.white,
-    marginRight: theme.spacing(3),
+    // marginRight: theme.spacing(3),
   },
   title: {
     color: theme.palette.common.white,
