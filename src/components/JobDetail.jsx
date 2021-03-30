@@ -130,7 +130,11 @@ const JobDetail = () => {
                 <ListItemIcon>
                   <LinkIcon />
                 </ListItemIcon>
-                <ListItemText primary={url} className={classes.link} />
+                <ListItemText>
+                  <a href={url} target='_blank'>
+                    {url}
+                  </a>
+                </ListItemText>
               </ListItem>
             </List>
           </Grid>

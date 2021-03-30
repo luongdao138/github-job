@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
     columnGap: '15px',
     alignItems: 'center',
     [theme.breakpoints.down('xs')]: {
-      gridTemplateColumns: '1fr 4fr',
+      gridTemplateColumns: '1.5fr 4fr',
       rowGap: '10px',
     },
   },
@@ -96,6 +96,7 @@ const useStyles = makeStyles((theme) => ({
       },
     },
     [theme.breakpoints.down('xs')]: {
+      padding: '8px 0',
       '& .MuiListItem-gutters': {
         paddingLeft: theme.spacing(1),
         paddingRight: theme.spacing(1),
