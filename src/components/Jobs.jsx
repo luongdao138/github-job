@@ -5,6 +5,8 @@ import Pagination from '@material-ui/lab/Pagination';
 import { useGitContext } from '../context.js';
 import Loader from './Loader.jsx';
 import Filter from './Filter.jsx';
+import Popup from './Popup.jsx';
+import JobDetail from './JobDetail.jsx';
 
 const useStyles = makeStyles((theme) => ({
   pagination: {
@@ -15,8 +17,29 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Jobs = () => {
-  const { jobs, isLoading, page, setPage, totalPage } = useGitContext();
+  const {
+    jobs,
+    isLoading,
+    page,
+    setPage,
+    totalPage,
+    error,
+    dialogOption,
+  } = useGitContext();
   const classes = useStyles();
+
+  if (error) {
+    return (
+      <h1
+        style={{
+          textAlign: 'center',
+          color: '#f44242',
+        }}
+      >
+        Oops! Sorry, there is some error while loading the jobs!
+      </h1>
+    );
+  }
 
   return (
     <div style={{ padding: '20px' }}>
@@ -56,6 +79,9 @@ const Jobs = () => {
           }}
         />
       </div>
+      <Popup isOpen={dialogOption.show}>
+        <JobDetail />
+      </Popup>
     </div>
   );
 };

@@ -10,6 +10,11 @@ const AppProvider = ({ children }) => {
   const [dark, setDark] = useState(false);
   const [page, setPage] = useState(1);
   const [totalPage, setTotalPage] = useState(6);
+  const [error, setError] = useState();
+  const [dialogOption, setDialogOption] = useState({
+    show: false,
+    job: {},
+  });
   const [filterOptions, setFilterOptions] = useState({
     description: '',
     location: '',
@@ -27,7 +32,7 @@ const AppProvider = ({ children }) => {
 
   const paginateJob = (page) => {
     setIsLoading(true);
-
+    setError(false);
     axios
       .get(`${rootUrl}?page=${page}`, {
         params: {
@@ -39,10 +44,12 @@ const AppProvider = ({ children }) => {
       })
       .then((res) => {
         setJobs(res.data);
+        console.log(res.data);
         setIsLoading(false);
       })
       .catch((error) => {
         console.log(error);
+        setError(true);
         setIsLoading(false);
       });
   };
@@ -59,19 +66,6 @@ const AppProvider = ({ children }) => {
     });
   };
 
-  const filterJobs = async (page) => {
-    const res = await axios.get(`${rootUrl}`, {
-      params: {
-        markdown: true,
-        page,
-        description: filterOptions.description,
-        location: filterOptions.location,
-        full_time: filterOptions.fulltime_only,
-      },
-    });
-    console.log(res.data);
-  };
-
   return (
     <ThemeProvider theme={theme}>
       <context.Provider
@@ -82,10 +76,13 @@ const AppProvider = ({ children }) => {
           setDark,
           totalPage,
           page,
+          error,
           setPage,
           filterOptions,
           handleChange,
           paginateJob,
+          dialogOption,
+          setDialogOption,
         }}
       >
         {children}

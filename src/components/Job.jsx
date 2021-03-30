@@ -17,6 +17,7 @@ import {
 import LocationOnIcon from '@material-ui/icons/LocationOn';
 import BusinessIcon from '@material-ui/icons/Business';
 import LinkIcon from '@material-ui/icons/Link';
+import { useGitContext } from '../context';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -123,64 +124,77 @@ const useStyles = makeStyles((theme) => ({
 const Job = ({ job }) => {
   const { company_logo, title, created_at, company, location, url, type } = job;
   const classes = useStyles();
+  const { setDialogOption } = useGitContext();
   return (
-    <Grid item xs={12} md={6} lg={4} className={classes.root}>
-      <Card className={classes.card} variant='outlined'>
-        <CardMedia className={classes.media}>
-          {company_logo ? (
-            <img src={company_logo} alt='' style={{ width: '100%' }} />
-          ) : (
-            <div />
-          )}
-          <div>
-            <Typography
-              variant='subtitle2'
-              gutterBottom
-              className={classes.title}
+    <>
+      <Grid item xs={12} md={6} lg={4} className={classes.root}>
+        <Card className={classes.card} variant='outlined'>
+          <CardMedia className={classes.media}>
+            {company_logo ? (
+              <img src={company_logo} alt='' style={{ width: '100%' }} />
+            ) : (
+              <div />
+            )}
+            <div>
+              <Typography
+                variant='subtitle2'
+                gutterBottom
+                className={classes.title}
+              >
+                {title}
+              </Typography>
+              <Typography variant='body2' className={classes.time}>
+                {created_at}
+              </Typography>
+            </div>
+            <div className={classes.type}>
+              <Typography variant='body2'>{type}</Typography>
+            </div>
+          </CardMedia>
+          <CardContent className={classes.content}>
+            <List>
+              <ListItem>
+                <ListItemIcon>
+                  <BusinessIcon />
+                </ListItemIcon>
+                <ListItemText primary={company} />
+              </ListItem>
+              <ListItem>
+                <ListItemIcon>
+                  <LocationOnIcon />
+                </ListItemIcon>
+                <ListItemText primary={location} />
+              </ListItem>
+              <ListItem>
+                <ListItemIcon>
+                  <LinkIcon />
+                </ListItemIcon>
+                <ListItemText>
+                  <a href={url} target='_blank'>
+                    {url}
+                  </a>
+                </ListItemText>
+              </ListItem>
+            </List>
+          </CardContent>
+          <CardActions>
+            <Button
+              color='primary'
+              variant='outlined'
+              className={classes.button}
+              onClick={() => {
+                setDialogOption({
+                  show: true,
+                  job,
+                });
+              }}
             >
-              {title}
-            </Typography>
-            <Typography variant='body2' className={classes.time}>
-              {created_at}
-            </Typography>
-          </div>
-          <div className={classes.type}>
-            <Typography variant='body2'>{type}</Typography>
-          </div>
-        </CardMedia>
-        <CardContent className={classes.content}>
-          <List>
-            <ListItem>
-              <ListItemIcon>
-                <BusinessIcon />
-              </ListItemIcon>
-              <ListItemText primary={company} />
-            </ListItem>
-            <ListItem>
-              <ListItemIcon>
-                <LocationOnIcon />
-              </ListItemIcon>
-              <ListItemText primary={location} />
-            </ListItem>
-            <ListItem>
-              <ListItemIcon>
-                <LinkIcon />
-              </ListItemIcon>
-              <ListItemText>
-                <a href={url} target='_blank'>
-                  {url}
-                </a>
-              </ListItemText>
-            </ListItem>
-          </List>
-        </CardContent>
-        <CardActions>
-          <Button color='primary' variant='outlined' className={classes.button}>
-            View detail
-          </Button>
-        </CardActions>
-      </Card>
-    </Grid>
+              View detail
+            </Button>
+          </CardActions>
+        </Card>
+      </Grid>
+    </>
   );
 };
 
