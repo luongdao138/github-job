@@ -3,10 +3,8 @@ import { Grid, makeStyles } from '@material-ui/core';
 import Job from './Job.jsx';
 import Pagination from '@material-ui/lab/Pagination';
 import { useGitContext } from '../context.js';
-import loadingImage from '../images/loading2.gif';
 import Loader from './Loader.jsx';
 import Filter from './Filter.jsx';
-import { PaginationItem } from '@material-ui/lab';
 
 const useStyles = makeStyles((theme) => ({
   pagination: {
@@ -17,43 +15,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Jobs = () => {
-  const { jobs, isLoading, page, setPage } = useGitContext();
-
-  const [jobsPerPage, setJobsPerPage] = useState(6);
-  const [jobsAfterPaging, setJobsAfterPaging] = useState([]);
+  const { jobs, isLoading, page, setPage, totalPage } = useGitContext();
   const classes = useStyles();
-  const totalPage = 6;
-
-  // useEffect(() => {
-  //   setJobsAfterPaging(
-  //     jobs.slice((page - 1) * jobsPerPage, page * jobsPerPage).map((job) => {
-  //       const createdDate = new Date(job.created_at);
-  //       return {
-  //         ...job,
-  //         created_at: `${createdDate.getDate()}/${
-  //           createdDate.getMonth() + 1
-  //         }/${createdDate.getFullYear()}`,
-  //       };
-  //     })
-  //   );
-  // }, [page]);
-  // const getJobsAfterPaging = (page) => {
-  //   return jobs
-  //     .slice((page - 1) * jobsPerPage, page * jobsPerPage)
-  //     .map((job) => {
-  //       const createdDate = new Date(job.created_at);
-  //       return {
-  //         ...job,
-  //         created_at: `${createdDate.getDate()}/${
-  //           createdDate.getMonth() + 1
-  //         }/${createdDate.getFullYear()}`,
-  //       };
-  //     });
-  // };
-
-  // if (isLoading) {
-  //   return <Loader />;
-  // }
 
   return (
     <div style={{ padding: '20px' }}>
@@ -91,16 +54,6 @@ const Jobs = () => {
             console.log(page);
             setPage(page);
           }}
-          // renderItem={(item) => {
-          //   console.log(item);
-          //   return (
-          //     <PaginationItem
-          //       {...item}
-          //       selected={item.page === page}
-          //       onClick={(e) => setPage(item.page)}
-          //     />
-          //   );
-          // }}
         />
       </div>
     </div>

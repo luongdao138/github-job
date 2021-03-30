@@ -7,6 +7,7 @@ import {
   Button,
 } from '@material-ui/core';
 import React from 'react';
+import { useGitContext } from '../context';
 
 const useStyles = makeStyles((theme) => ({
   input: {
@@ -26,6 +27,17 @@ const useStyles = makeStyles((theme) => ({
 
 const Filter = () => {
   const classes = useStyles();
+  const { page, filterOptions, handleChange, paginateJob } = useGitContext();
+
+  const convertValue = (e, name) => {
+    return {
+      target: {
+        value: e.target.checked,
+        name,
+      },
+    };
+  };
+
   return (
     <section>
       <Grid style={{ marginTop: '0px' }} container spacing={3}>
@@ -34,6 +46,8 @@ const Filter = () => {
             className={classes.input}
             name='description'
             label='Description'
+            value={filterOptions.description}
+            onChange={handleChange}
           />
         </Grid>
         <Grid item xs={12} sm={6} lg={4}>
@@ -41,13 +55,21 @@ const Filter = () => {
             className={classes.input}
             name='location'
             label='Location'
+            value={filterOptions.location}
+            onChange={handleChange}
           />
         </Grid>
         <Grid item xs={12} sm={6} lg={4}>
-          <FormControlLabel control={<Checkbox />} label='Fulltime only' />
+          <FormControlLabel
+            control={<Checkbox />}
+            label='Fulltime only'
+            checked={filterOptions.fulltime_only}
+            onChange={(e) => handleChange(convertValue(e, 'fulltime_only'))}
+          />
           <Button
             variant='contained'
             color='primary'
+            onClick={() => paginateJob(page)}
             classes={{
               root: classes.button,
               label: classes.label,
