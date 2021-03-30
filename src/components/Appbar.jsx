@@ -6,10 +6,13 @@ import {
   Typography,
   InputBase,
   makeStyles,
+  Switch,
+  FormControlLabel,
   fade,
 } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
+import { useGitContext } from '../context';
 
 const useStyles = makeStyles((theme) => ({
   appbar: {
@@ -21,6 +24,7 @@ const useStyles = makeStyles((theme) => ({
   },
   search: {
     backgroundColor: fade(theme.palette.common.white, 0.15),
+    marginRight: '10px',
     borderRadius: theme.shape.borderRadius,
     position: 'relative',
     '& svg': {
@@ -58,6 +62,12 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Appbar = () => {
+  const { dark, setDark } = useGitContext();
+
+  const handleOnChange = (e) => {
+    setDark((old) => !old);
+  };
+
   const classes = useStyles();
   return (
     <AppBar position='static' className={classes.appbar}>
@@ -79,6 +89,9 @@ const Appbar = () => {
             }}
           />
         </div>
+        <FormControlLabel
+          control={<Switch checked={dark} onChange={handleOnChange} />}
+        />
       </Toolbar>
     </AppBar>
   );

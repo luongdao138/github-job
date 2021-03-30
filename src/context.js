@@ -1,12 +1,22 @@
 import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react';
-
+import { createMuiTheme, ThemeProvider } from '@material-ui/core';
 const rootUrl = '/positions.json';
 const context = React.createContext();
 
 const AppProvider = ({ children }) => {
   const [jobs, setJobs] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [dark, setDark] = useState(false);
+
+  const theme = createMuiTheme({
+    palette: {
+      primary: {
+        main: '#52cc50',
+      },
+      type: dark ? 'dark' : 'light',
+    },
+  });
 
   const fetchJobs = () => {
     setIsLoading(true);
@@ -29,7 +39,11 @@ const AppProvider = ({ children }) => {
   useEffect(fetchJobs, []);
 
   return (
-    <context.Provider value={{ jobs, isLoading }}>{children}</context.Provider>
+    <ThemeProvider theme={theme}>
+      <context.Provider value={{ jobs, isLoading, dark, setDark }}>
+        {children}
+      </context.Provider>
+    </ThemeProvider>
   );
 };
 

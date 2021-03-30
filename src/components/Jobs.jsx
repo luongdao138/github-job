@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { Grid, makeStyles } from '@material-ui/core';
-// import { jobs } from '../mockData.js';
 import Job from './Job.jsx';
 import Pagination from '@material-ui/lab/Pagination';
 import { useGitContext } from '../context.js';
 import loadingImage from '../images/loading2.gif';
 import Loader from './Loader.jsx';
+import Filter from './Filter.jsx';
 
 const useStyles = makeStyles((theme) => ({
   pagination: {
@@ -17,7 +17,6 @@ const useStyles = makeStyles((theme) => ({
 
 const Jobs = () => {
   const { jobs, isLoading } = useGitContext();
-  console.log(jobs);
 
   const [jobsPerPage, setJobsPerPage] = useState(6);
   const [page, setPage] = useState(1);
@@ -57,7 +56,8 @@ const Jobs = () => {
   }
 
   return (
-    <>
+    <div style={{ padding: '20px' }}>
+      <Filter />
       <Grid
         container
         spacing={3}
@@ -79,7 +79,7 @@ const Jobs = () => {
           onChange={(e, page) => setPage(page)}
         />
       </div>
-    </>
+    </div>
   );
 };
 

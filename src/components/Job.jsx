@@ -21,7 +21,7 @@ import LinkIcon from '@material-ui/icons/Link';
 const useStyles = makeStyles((theme) => ({
   root: {
     '& .MuiPaper-root': {
-      height: '100%',
+      // height: '100%',
     },
   },
   card: {
@@ -125,7 +125,7 @@ const Job = ({ job }) => {
   const classes = useStyles();
   return (
     <Grid item xs={12} md={6} lg={4} className={classes.root}>
-      <Card className={classes.card}>
+      <Card className={classes.card} variant='outlined'>
         <CardMedia className={classes.media}>
           {company_logo ? (
             <img src={company_logo} alt='' style={{ width: '100%' }} />
