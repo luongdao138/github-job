@@ -4,6 +4,7 @@ import {
   TextField,
   FormControlLabel,
   Checkbox,
+  Button,
 } from '@material-ui/core';
 import React from 'react';
 
@@ -14,6 +15,12 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.down('sm')]: {
       width: '100%',
     },
+  },
+  label: {
+    color: theme.palette.common.white,
+  },
+  button: {
+    marginLeft: theme.spacing(2),
   },
 }));
 
@@ -38,6 +45,16 @@ const Filter = () => {
         </Grid>
         <Grid item xs={12} sm={6} lg={4}>
           <FormControlLabel control={<Checkbox />} label='Fulltime only' />
+          <Button
+            variant='contained'
+            color='primary'
+            classes={{
+              root: classes.button,
+              label: classes.label,
+            }}
+          >
+            Search
+          </Button>
         </Grid>
       </Grid>
     </section>

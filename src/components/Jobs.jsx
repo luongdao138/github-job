@@ -6,6 +6,7 @@ import { useGitContext } from '../context.js';
 import loadingImage from '../images/loading2.gif';
 import Loader from './Loader.jsx';
 import Filter from './Filter.jsx';
+import { PaginationItem } from '@material-ui/lab';
 
 const useStyles = makeStyles((theme) => ({
   pagination: {
@@ -16,13 +17,12 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Jobs = () => {
-  const { jobs, isLoading } = useGitContext();
+  const { jobs, isLoading, page, setPage } = useGitContext();
 
   const [jobsPerPage, setJobsPerPage] = useState(6);
-  const [page, setPage] = useState(1);
   const [jobsAfterPaging, setJobsAfterPaging] = useState([]);
   const classes = useStyles();
-  const totalPage = Math.ceil(jobs.length / jobsPerPage);
+  const totalPage = 6;
 
   // useEffect(() => {
   //   setJobsAfterPaging(
@@ -37,46 +37,70 @@ const Jobs = () => {
   //     })
   //   );
   // }, [page]);
-  const getJobsAfterPaging = (page) => {
-    return jobs
-      .slice((page - 1) * jobsPerPage, page * jobsPerPage)
-      .map((job) => {
-        const createdDate = new Date(job.created_at);
-        return {
-          ...job,
-          created_at: `${createdDate.getDate()}/${
-            createdDate.getMonth() + 1
-          }/${createdDate.getFullYear()}`,
-        };
-      });
-  };
+  // const getJobsAfterPaging = (page) => {
+  //   return jobs
+  //     .slice((page - 1) * jobsPerPage, page * jobsPerPage)
+  //     .map((job) => {
+  //       const createdDate = new Date(job.created_at);
+  //       return {
+  //         ...job,
+  //         created_at: `${createdDate.getDate()}/${
+  //           createdDate.getMonth() + 1
+  //         }/${createdDate.getFullYear()}`,
+  //       };
+  //     });
+  // };
 
-  if (isLoading) {
-    return <Loader />;
-  }
+  // if (isLoading) {
+  //   return <Loader />;
+  // }
 
   return (
     <div style={{ padding: '20px' }}>
-      <Filter />
-      <Grid
-        container
-        spacing={3}
+      {!isLoading ? (
+        <>
+          <Filter />
+          <Grid
+            container
+            spacing={3}
+            style={{
+              marginTop: '30px',
+              marginBottom: '15px',
+            }}
+          >
+            {jobs.map((job, index) => {
+              return <Job key={index} job={job} />;
+            })}
+          </Grid>
+        </>
+      ) : (
+        <Loader />
+      )}
+      <div
         style={{
-          marginTop: '30px',
-          marginBottom: '15px',
+          display: isLoading ? 'none' : 'flex',
+          marginBottom: isLoading ? '0px' : '30px',
         }}
       >
-        {getJobsAfterPaging(page).map((job, index) => {
-          return <Job key={index} job={job} />;
-        })}
-      </Grid>
-      <div style={{ display: 'flex', marginBottom: '30px' }}>
         <div style={{ flexGrow: 1 }}></div>
         <Pagination
           className={classes.pagination}
           color='primary'
           count={totalPage}
-          onChange={(e, page) => setPage(page)}
+          onChange={(e, page) => {
+            console.log(page);
+            setPage(page);
+          }}
+          // renderItem={(item) => {
+          //   console.log(item);
+          //   return (
+          //     <PaginationItem
+          //       {...item}
+          //       selected={item.page === page}
+          //       onClick={(e) => setPage(item.page)}
+          //     />
+          //   );
+          // }}
         />
       </div>
     </div>

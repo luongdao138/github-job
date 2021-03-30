@@ -8,6 +8,7 @@ const AppProvider = ({ children }) => {
   const [jobs, setJobs] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [dark, setDark] = useState(false);
+  const [page, setPage] = useState(1);
 
   const theme = createMuiTheme({
     palette: {
@@ -18,10 +19,29 @@ const AppProvider = ({ children }) => {
     },
   });
 
-  const fetchJobs = () => {
+  // const fetchJobs = () => {
+  //   setIsLoading(true);
+  //   axios
+  //     .get(`${rootUrl}?page=1`, {
+  //       params: {
+  //         markdown: true,
+  //       },
+  //     })
+  //     .then((res) => {
+  //       setJobs(res.data);
+  //       setIsLoading(false);
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //       setIsLoading(false);
+  //     });
+  // };
+
+  const paginateJob = (page) => {
     setIsLoading(true);
+
     axios
-      .get(rootUrl, {
+      .get(`${rootUrl}?page=${page}`, {
         params: {
           markdown: true,
         },
@@ -36,11 +56,15 @@ const AppProvider = ({ children }) => {
       });
   };
 
-  useEffect(fetchJobs, []);
+  useEffect(() => {
+    paginateJob(page);
+  }, [page]);
 
   return (
     <ThemeProvider theme={theme}>
-      <context.Provider value={{ jobs, isLoading, dark, setDark }}>
+      <context.Provider
+        value={{ jobs, isLoading, dark, setDark, page, setPage }}
+      >
         {children}
       </context.Provider>
     </ThemeProvider>
