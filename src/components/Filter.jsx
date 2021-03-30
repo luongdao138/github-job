@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.common.white,
   },
   button: {
-    marginLeft: theme.spacing(2),
+    // marginLeft: theme.spacing(2),
   },
 }));
 
@@ -59,13 +59,15 @@ const Filter = () => {
             onChange={handleChange}
           />
         </Grid>
-        <Grid item xs={12} sm={6} lg={4}>
+        <Grid item xs={12} sm={6} lg={2}>
           <FormControlLabel
             control={<Checkbox />}
             label='Fulltime only'
             checked={filterOptions.fulltime_only}
             onChange={(e) => handleChange(convertValue(e, 'fulltime_only'))}
           />
+        </Grid>
+        <Grid item xs={12} sm={6} lg={2}>
           <Button
             variant='contained'
             color='primary'

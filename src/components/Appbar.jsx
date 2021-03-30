@@ -62,7 +62,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Appbar = () => {
-  const { dark, setDark } = useGitContext();
+  const { dark, setDark, setOpenDrawer } = useGitContext();
 
   const handleOnChange = (e) => {
     setDark((old) => !old);
@@ -72,7 +72,7 @@ const Appbar = () => {
   return (
     <AppBar position='static' className={classes.appbar}>
       <Toolbar>
-        <IconButton>
+        <IconButton onClick={() => setOpenDrawer(true)}>
           <MenuIcon fontSize='large' className={classes.icon} />
         </IconButton>
         <Typography variant='h5' className={classes.title}>

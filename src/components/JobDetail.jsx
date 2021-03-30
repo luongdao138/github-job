@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
     objectFit: 'cover',
   },
   title: {
-    fontSize: '16px',
+    fontSize: '18px',
     fontWeight: '800',
     letterSpacing: '2px',
     [theme.breakpoints.down('xs')]: {
@@ -74,7 +74,7 @@ const useStyles = makeStyles((theme) => ({
     wordBreak: 'break-word',
     color: theme.palette.primary.main,
     letterSpacing: '1.5px',
-    textAlign: 'justify',
+    // textAlign: 'justify',
     lineHeight: '24px',
   },
   showMoreBtn: {
