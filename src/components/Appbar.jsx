@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
       position: 'absolute',
       top: '50%',
       transform: 'translateY(-50%)',
-      left: '15px',
+      left: '10px',
       color: theme.palette.common.white,
     },
   },
@@ -39,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
     color: 'inherit',
   },
   inputInput: {
-    padding: theme.spacing(1.5, 1.5, 1.5, 6),
+    padding: theme.spacing(1.5, 1.5, 1.5, 5),
     color: theme.palette.common.white,
     [theme.breakpoints.down('xs')]: {
       padding: theme.spacing(1, 1, 1, 5),
@@ -92,7 +92,9 @@ const Appbar = () => {
         <FormControlLabel
           control={<Switch checked={dark} onChange={handleOnChange} />}
         />
+        <div></div>
       </Toolbar>
+      {/* <Navbar /> */}
     </AppBar>
   );
 };
