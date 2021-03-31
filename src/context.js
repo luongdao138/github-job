@@ -11,7 +11,7 @@ const AppProvider = ({ children }) => {
   const [page, setPage] = useState(1);
   const [totalPage, setTotalPage] = useState(6);
   const [error, setError] = useState();
-  const [openDrawer, setOpenDrawer] = useState(true);
+  const [openDrawer, setOpenDrawer] = useState(false);
   const [dialogOption, setDialogOption] = useState({
     show: false,
     job: {},

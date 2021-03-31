@@ -19,8 +19,13 @@ import HomeIcon from '@material-ui/icons/Home';
 import { Link, BrowserRouter as Router } from 'react-router-dom';
 import { useGitContext } from '../context';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import { useAuth0 } from '@auth0/auth0-react';
+import Navbar from '../components/Navbar';
+
 const useStyles = makeStyles((theme) => ({
   item: {
+    cursor: 'pointer',
     padding: theme.spacing(1.5, 15, 1.5, 1.5),
     '&:hover': {
       transition: 'all 0.3s linear',
@@ -31,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   label: {
-    color: '#474545',
+    color: theme.palette.secondary.main,
     [theme.breakpoints.down('sm')]: {
       fontSize: '16px',
     },
@@ -41,11 +46,14 @@ const useStyles = makeStyles((theme) => ({
 const Home = () => {
   const classes = useStyles();
   const { openDrawer, setOpenDrawer } = useGitContext();
+  const { isAuthenticated, loginWithRedirect, logout, user } = useAuth0();
+  const isUser = isAuthenticated && user;
 
   return (
     <Container>
       <Paper>
         <Appbar />
+        <Navbar />
         <Jobs />
       </Paper>
       <Drawer
@@ -71,7 +79,7 @@ const Home = () => {
         <Divider />
         <Router>
           <List>
-            <ListItem component={Link} to='/acdcds' className={classes.item}>
+            <ListItem component={Link} to='/' className={classes.item}>
               <ListItemIcon>
                 <HomeIcon />
               </ListItemIcon>
@@ -81,16 +89,30 @@ const Home = () => {
                 </Typography>
               </ListItemText>
             </ListItem>
-            <ListItem component={Link} to='/acdcds' className={classes.item}>
-              <ListItemIcon>
-                <LockOpenIcon />
-              </ListItemIcon>
-              <ListItemText>
-                <Typography variant='h6' className={classes.label}>
-                  Login
-                </Typography>
-              </ListItemText>
-            </ListItem>
+            {!isUser && (
+              <ListItem className={classes.item} onClick={loginWithRedirect}>
+                <ListItemIcon>
+                  <LockOpenIcon />
+                </ListItemIcon>
+                <ListItemText>
+                  <Typography variant='h6' className={classes.label}>
+                    Login
+                  </Typography>
+                </ListItemText>
+              </ListItem>
+            )}
+            {isUser && (
+              <ListItem className={classes.item} onClick={logout}>
+                <ListItemIcon>
+                  <ExitToAppIcon />
+                </ListItemIcon>
+                <ListItemText>
+                  <Typography variant='h6' className={classes.label}>
+                    Logout
+                  </Typography>
+                </ListItemText>
+              </ListItem>
+            )}
           </List>
         </Router>
       </Drawer>
