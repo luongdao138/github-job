@@ -54,7 +54,7 @@ const Jobs = () => {
               marginBottom: '15px',
             }}
           >
-            {jobs.map((job, index) => {
+            {jobs?.map((job, index) => {
               return <Job key={index} job={job} />;
             })}
           </Grid>
